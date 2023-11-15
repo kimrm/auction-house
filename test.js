@@ -1,3 +1,5 @@
-const variable = "fosijfodsfjs";
-
-const x = 1;
+export function dadJoke() {
+  return new Promise(function (resolve, reject) {
+    joker.getRandomDadJoke(resolve);
+  });
+}
