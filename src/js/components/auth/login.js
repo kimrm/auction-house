@@ -2,8 +2,8 @@ import createComponent from "../../utils/createComponent";
 
 function login() {
   const html = `
-    <div class="container mx-auto px-4">
-        <h1 class="text-3xl font-bold mb-4">Login</h1>
+    <div class="container mx-auto p-4">
+        <h2 class="text-3xl font-bold mb-4">Login</h1>
         <p>To get access to bidding and adding listings you need to login. If you don't have an account yet, please <a id="registerLink" href="/register" class=" visited:text-blue-500">register</a></p>
         
         ${
