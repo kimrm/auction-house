@@ -5,7 +5,7 @@ function login() {
     <div class="container mx-auto p-4">
         <h2 class="text-3xl font-bold mb-4">Login</h1>
         <p>To get access to bidding and adding listings you need to login. If you don't have an account yet, please <a id="registerLink" href="/register" class=" visited:text-blue-500">register</a></p>
-        
+        <p id="validationMessage" class="text-red-700"></p>
         ${
           new URLSearchParams(window.location.search).get("registered") ===
           "true"
@@ -13,12 +13,16 @@ function login() {
             : ""
         }
 
-        <form class="flex flex-col gap-4 mt-4 md:w-2/3 lg:w-1/2">
+        <form class="flex flex-col gap-4 mt-6 md:w-2/3 lg:w-1/2 bg-gray-100 rounded-lg p-4">
+          <div class="flex flex-col">
             <label for="email">Email</label>
             <input id="email" type="email" class="border border-gray-300 p-2 rounded-lg">
+          </div>
+          <div class="flex flex-col">
             <label for="password">Password</label>
             <input id="password" type="password" class="border border-gray-300 p-2 rounded-lg">
-            <button type="submit" class="bg-blue-500 text-white rounded-lg p-2">Login</button>
+          </div>            
+          <button type="submit" class="bg-blue-500 text-white rounded-lg p-2">Login</button>
         </form>
     </div>
     `;
