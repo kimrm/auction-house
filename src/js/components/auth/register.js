@@ -3,7 +3,7 @@ import registerCall from "../../functions/api/register";
 
 function register() {
   const html = `<div class="container mx-auto p-4">
-    <h1 class="text-3xl font-bold mb-4">Register</h1>
+    <h2 class="text-3xl font-bold mb-4">Register</h1>
     <p>Register to get access to bidding and adding listings. If you already have an account, please <a href="/login" id="loginLink" class="visited:text-blue-500">login</a></p>
     <p id="validationMessage" class="text-red-700"></p>
     <form class="flex flex-col gap-4 mt-6 md:w-2/3 lg:w-1/2 bg-gray-100 rounded-lg p-4">
