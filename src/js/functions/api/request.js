@@ -1,7 +1,7 @@
 async function call(method, url, data = null) {
   const options = {
     method: method,
-    body: data ? JSON.stringify(data) : null,
+    body: JSON.stringify(data),
     headers: {
       "Content-Type": "application/json",
     },
@@ -11,7 +11,13 @@ async function call(method, url, data = null) {
     const responseData = await response.json();
     return responseData;
   } catch (error) {
-    console.log({ error: error });
+    return {
+      errors: [
+        {
+          message: error.message,
+        },
+      ],
+    };
   }
 }
 
