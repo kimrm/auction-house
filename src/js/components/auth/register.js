@@ -1,5 +1,6 @@
 import createComponent from "../../utils/createComponent";
 import registerCall from "../../functions/api/register";
+import { registeredEvent, routeChangedEvent } from "../../customEvents";
 
 function register() {
   const html = `<div class="container mx-auto p-4">
@@ -50,11 +51,6 @@ function register() {
 function handleSubmit(event) {
   event.preventDefault();
 
-  const registeredEvent = new CustomEvent("registered", {
-    bubbles: true,
-    detail: {},
-  });
-
   const form = event.target;
 
   if (!validate(form)) {
@@ -65,27 +61,21 @@ function handleSubmit(event) {
 
   const formData = new FormData(form);
   formData.delete("confirmPassword");
-  registerCall({ ...Object.fromEntries(formData.entries()) }).then((result) => {
+  const data = Object.fromEntries(formData.entries());
+  registerCall(data).then((result) => {
     if (result.errors) {
       const validationMessage = document.querySelector("#validationMessage");
       validationMessage.textContent = result.errors[0].message;
       return;
     }
 
-    document.dispatchEvent(registeredEvent);
+    document.dispatchEvent(registeredEvent());
   });
 }
 
 function handleLoginClick(event) {
   event.preventDefault();
-  window.history.pushState({}, null, "/login");
-  const routeChangedEvent = new CustomEvent("routeChanged", {
-    bubbles: true,
-    detail: {
-      route: "login",
-    },
-  });
-  document.dispatchEvent(routeChangedEvent);
+  document.dispatchEvent(routeChangedEvent("login"));
 }
 
 function validateName(form, name) {
