@@ -10,7 +10,6 @@ function app() {
     `
     <div id="header" class="container mx-auto px-4"></div>
     <div id="content" class="container mx-auto pb-14">
- 
     </div>
     `,
   );
@@ -20,16 +19,30 @@ function app() {
 
   headerContainer.append(header());
 
-  component.append(footer());
+  const footerElement = footer();
+
+  component.append(footerElement);
 
   document.addEventListener("routeChanged", (event) => {
     const { route } = event.detail;
+    window.history.pushState({}, null, `/${route}`);
     handleRoutes(route);
   });
 
   document.addEventListener("registered", () => {
     window.history.pushState({}, null, "/login?registered=true");
     renderRoute(contentContainer, login());
+  });
+
+  document.addEventListener("loggedIn", () => {
+    console.log("reloading header");
+    headerContainer.innerHTML = "";
+    headerContainer.append(header());
+    contentContainer.innerHTML = "";
+    contentContainer.append(listings());
+    component.removeChild(footerElement);
+    const footerElement = footer();
+    component.append(footerElement);
   });
 
   function handleRoutes(route) {
