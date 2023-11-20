@@ -1,11 +1,13 @@
 import createComponent from "../../utils/createComponent";
+import authenticate from "../../functions/auth/authenticate";
+import { loggedInEvent, routeChangedEvent } from "../../customEvents";
 
 function login() {
   const html = `
-    <div class="container mx-auto p-4">
+    <div id="container" class="container mx-auto p-4">
         <h2 class="text-3xl font-bold mb-4">Login</h1>
         <p>To get access to bidding and adding listings you need to login. If you don't have an account yet, please <a id="registerLink" href="/register" class=" visited:text-blue-500">register</a></p>
-        <p id="validationMessage" class="text-red-700"></p>
+        <div id="validationMessage" class="text-red-700 my-3 p-4 bg-red-100 rounded-lg md:w-2/3 lg:w-1/2 hidden"></div>
         ${
           new URLSearchParams(window.location.search).get("registered") ===
           "true"
@@ -16,11 +18,11 @@ function login() {
         <form class="flex flex-col gap-4 mt-6 md:w-2/3 lg:w-1/2 bg-gray-100 rounded-lg p-4">
           <div class="flex flex-col">
             <label for="email">Email</label>
-            <input id="email" type="email" class="border border-gray-300 p-2 rounded-lg">
+            <input id="email" name="email" type="email" class="border border-gray-300 p-2 rounded-lg">
           </div>
           <div class="flex flex-col">
             <label for="password">Password</label>
-            <input id="password" type="password" class="border border-gray-300 p-2 rounded-lg">
+            <input id="password" name="password" type="password" class="border border-gray-300 p-2 rounded-lg">
           </div>            
           <button type="submit" class="bg-blue-500 text-white rounded-lg p-2">Login</button>
         </form>
@@ -29,32 +31,39 @@ function login() {
 
   const component = createComponent(html);
 
+  const container = component.querySelector("#container");
+
   const registerLink = component.querySelector("#registerLink");
   registerLink.addEventListener("click", (event) => {
     event.preventDefault();
-    window.history.pushState({}, null, "/register");
-    const routeChanged = new CustomEvent("routeChanged", {
-      bubbles: true,
-      detail: {
-        route: "register",
-      },
-    });
-    document.dispatchEvent(routeChanged);
+    document.dispatchEvent(routeChangedEvent("register"));
   });
 
   const form = component.querySelector("form");
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-    const email = component.querySelector("#email").value;
-    const password = component.querySelector("#password").value;
-    const loginEvent = new CustomEvent("login", {
-      bubbles: true,
-      detail: {
-        email,
-        password,
-      },
+
+    const validationMessage = container.querySelector("#validationMessage");
+    validationMessage.classList.add("hidden");
+
+    const form = event.target;
+    const formData = new FormData(form);
+
+    const data = Object.fromEntries(formData.entries());
+
+    authenticate(data).then((auth) => {
+      if (auth.errors) {
+        validationMessage.classList.remove("hidden");
+        validationMessage.innerHTML = `<p class="font-bold">Could not log you in:</p>`;
+        validationMessage.innerHTML += auth.errors
+          .map((error) => `<p>${error.message}</p>`)
+          .join("");
+        return;
+      }
+
+      document.dispatchEvent(loggedInEvent(auth));
+      document.dispatchEvent(routeChangedEvent("listings"));
     });
-    document.dispatchEvent(loginEvent);
   });
 
   return component;
