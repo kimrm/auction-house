@@ -1,4 +1,7 @@
 import "../css/style.css";
-import app from "./components/app";
+//import app from "./components/app";
+import AppContainer from "./components/AppContainer";
 
-document.getElementById("app").append(app());
+const appContainer = new AppContainer();
+
+document.getElementById("app").append(appContainer.app());

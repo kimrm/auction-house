@@ -1,32 +1,55 @@
-async function call(method, url, data = null) {
+function call(method, url, data = null) {
   const options = {
     method: method,
-    body: JSON.stringify(data),
     headers: {
       "Content-Type": "application/json",
     },
   };
-  try {
-    const response = await fetch(url, options);
-    const responseData = await response.json();
-    return responseData;
-  } catch (error) {
-    return {
-      errors: [
-        {
-          message: error.message,
-        },
-      ],
-    };
+  if (data) {
+    options.body = JSON.stringify(data);
   }
+
+  return fetch(url, options)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      return {
+        errors: [
+          {
+            message: error.message,
+          },
+        ],
+      };
+    });
+
+  // try {
+  //   const response = await fetch(url, options);
+  //   if (!response.ok) {
+  //     throw new Error(response.statusText);
+  //   }
+  //   const responseData = await response.json();
+  //   return responseData;
+  // } catch (error) {
+  //   return {
+  //     errors: [
+  //       {
+  //         message: error.message,
+  //       },
+  //     ],
+  //   };
+  // }
 }
 
-async function get(url) {
-  return await call("GET", url);
+function get(url, queryParams = null) {
+  return call("GET", url + "?" + new URLSearchParams(queryParams));
 }
 
-async function post(url, data) {
-  return await call("POST", url, data);
+function post(url, data) {
+  return call("POST", url, data);
 }
 
 export { get, post };

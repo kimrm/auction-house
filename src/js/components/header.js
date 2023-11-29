@@ -30,7 +30,7 @@ function header() {
   const logoLink = component.querySelector("#logoLink");
   logoLink.addEventListener("click", (event) => {
     event.preventDefault();
-    document.dispatchEvent(routeChangedEvent(""));
+    document.dispatchEvent(routeChangedEvent("listings"));
   });
 
   const profileButton = component.querySelector("#profileButton");

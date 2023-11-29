@@ -22,3 +22,10 @@ export function registeredEvent() {
     detail: {},
   });
 }
+
+export function detailsModalClosedEvent() {
+  return new CustomEvent("detailsModalClosed", {
+    bubbles: true,
+    detail: {},
+  });
+}
