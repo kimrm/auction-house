@@ -1,4 +1,8 @@
 function call(method, url, data = null) {
+  const loggedInProfile = localStorage.getItem("profile");
+  const token = loggedInProfile
+    ? JSON.parse(loggedInProfile).accessToken
+    : null;
   const options = {
     method: method,
     headers: {
@@ -7,6 +11,9 @@ function call(method, url, data = null) {
   };
   if (data) {
     options.body = JSON.stringify(data);
+  }
+  if (token) {
+    options.headers.Authorization = "Bearer " + token;
   }
 
   return fetch(url, options)
@@ -25,23 +32,6 @@ function call(method, url, data = null) {
         ],
       };
     });
-
-  // try {
-  //   const response = await fetch(url, options);
-  //   if (!response.ok) {
-  //     throw new Error(response.statusText);
-  //   }
-  //   const responseData = await response.json();
-  //   return responseData;
-  // } catch (error) {
-  //   return {
-  //     errors: [
-  //       {
-  //         message: error.message,
-  //       },
-  //     ],
-  //   };
-  // }
 }
 
 function get(url, queryParams = null) {
@@ -52,4 +42,8 @@ function post(url, data) {
   return call("POST", url, data);
 }
 
-export { get, post };
+function put(url, data) {
+  return call("PUT", url, data);
+}
+
+export { get, post, put };

@@ -2,12 +2,14 @@ import createComponent from "../utils/createComponent";
 import header from "./header";
 import footer from "./footer";
 import listings from "./listings/listings";
+import viewProfile from "./profile/viewProfile";
 import login from "./auth/login";
 import register from "./auth/register";
 import listingsDetail from "./listings/listingsDetail";
 import backdrop from "./backdrop";
 import overlay from "./overlay";
 import pageState from "../utils/pageState";
+import getAuth from "../functions/auth/getAuth";
 
 class AppContainer {
   constructor() {
@@ -23,8 +25,8 @@ class AppContainer {
 
     this.component = createComponent(
       `
-      <div id="header" class="container bg-slate-100 transition-all mx-auto left-0 right-0 px-4 z-10 w-full bg-opacity-95 backdrop-blur-lg rounded-lg"></div>
-      <div id="content" class="container mx-auto my-4 pb-14 relative">
+      <div id="header" class="container bg-slate-100 transition-all mx-auto left-0 right-0 top-2 px-4 z-50 w-full bg-opacity-95 backdrop-blur-lg rounded-lg fixed"></div>
+      <div id="content" class="container mx-auto mt-24 pb-14 relative">
       </div>
       `,
     );
@@ -50,9 +52,6 @@ class AppContainer {
     });
     document.addEventListener("loggedIn", () => {
       this.handleLoggedInEvent();
-    });
-    document.addEventListener("pageTabNavigation_pageChanged", () => {
-      this.handlePageTabNavigationEvent();
     });
     document.addEventListener("detailsModalClosed", () => {
       this.handleDetailsModalClosedEvent();
@@ -88,6 +87,7 @@ class AppContainer {
     const id = route.split("/")[1];
     const detailsComponent = listingsDetail(id);
     this.displayModal(detailsComponent);
+    this.state.currentModal = detailsComponent;
   }
 
   displayModal(modalBodyComponent) {
@@ -105,6 +105,12 @@ class AppContainer {
   }
 
   handleRoutes(route) {
+    if (this.state.currentModal) {
+      this.component.removeChild(this.backdropComponent);
+      this.component.removeChild(this.overlayComponent);
+      this.overlayComponent.innerHTML = "";
+      this.state.currentModal = null;
+    }
     switch (route) {
       case "login":
         this.renderComponent(this.loginComponent);
@@ -118,7 +124,31 @@ class AppContainer {
       case "listings":
         this.renderComponent(this.listingsComponent);
         break;
+      case "listings/my-listings":
+        this.renderComponent(this.listingsComponent);
+        break;
+      case "listings/my-bids":
+        this.renderComponent(this.listingsComponent);
+        break;
       default:
+        console.log("route: ", route);
+        if (route.includes("search")) {
+          const searchQuery = route.split("/")[2];
+          this.renderComponent(listings(searchQuery));
+          break;
+        }
+        if (route.includes("profile")) {
+          let profileName = route.split("/")[1];
+          if (!profileName) {
+            const auth = getAuth();
+            if (!auth) {
+              break;
+            }
+            profileName = auth.name;
+          }
+          this.renderComponent(viewProfile(profileName));
+          break;
+        }
         this.renderDetailsModal(route);
         break;
     }
@@ -129,12 +159,12 @@ class AppContainer {
   }
 
   handleScrollEvent() {
-    const header = document.querySelector("#header");
-    if (window.scrollY > 50) {
-      header.classList.add("shadow", "fixed");
-    } else {
-      header.classList.remove("shadow", "fixed");
-    }
+    // const header = document.querySelector("#header");
+    // if (window.scrollY > 50) {
+    //   header.classList.add("shadow", "fixed");
+    // } else {
+    //   header.classList.remove("shadow", "fixed");
+    // }
   }
 
   handlePopStateEvent() {
@@ -145,7 +175,7 @@ class AppContainer {
   handleRouteChangedEvent(event) {
     const { route } = event.detail;
     history.pushState({}, null, `/${route}`);
-    console.log("Route changed: ", route);
+
     this.handleRoutes(route);
   }
 
@@ -164,14 +194,11 @@ class AppContainer {
     this.component.append(footerElement);
   }
 
-  handlePageTabNavigationEvent(event) {
-    console.log(event.detail.page);
-  }
-
   handleDetailsModalClosedEvent() {
     this.component.removeChild(this.backdropComponent);
     this.component.removeChild(this.overlayComponent);
     this.overlayComponent.innerHTML = "";
+    this.state.currentModal = null;
     if (this.state.currentComponent) {
       history.back();
     } else {
