@@ -44,6 +44,12 @@ function listingsForm() {
 
   const profile = getAuth();
 
+  if (!profile) {
+    return createComponent(
+      `<p>You need to be logged in to create a listing.</p>`,
+    );
+  }
+
   listingsForProfile(profile.name, { _bids: true }).then((listings) => {
     const items = listings.map((listing) => listingsItem(listing));
     const container = component.querySelector("#listingsForProfileContainer");

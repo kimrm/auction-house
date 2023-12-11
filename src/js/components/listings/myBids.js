@@ -3,6 +3,7 @@ import bids from "../../functions/api/bids";
 import listingsDetail from "../../functions/api/listingsDetail";
 import getAuth from "../../functions/auth/getAuth";
 import listingItem from "./listingsItem";
+import { routeChangedEvent } from "../../customEvents";
 
 function myBids() {
   const html = `
@@ -16,11 +17,22 @@ function myBids() {
 </div>
     `;
 
+  const profile = getAuth();
+
+  if (!profile) {
+    const loginAlertComponent = createComponent(
+      `<p>You need to be logged in to view bids. <a href="#" id="loginLink" class="text-blue-900">Log in</p>`,
+    );
+    const loginLink = loginAlertComponent.querySelector("#loginLink");
+    loginLink.addEventListener("click", () => {
+      document.dispatchEvent(routeChangedEvent("login"));
+    });
+    return loginAlertComponent;
+  }
+
   const component = createComponent(html);
 
   const bidsContainer = component.querySelector("#bidsForProfileContainer");
-
-  const profile = getAuth();
 
   bids(profile.name).then((data) => {
     data.forEach((bid) => {
