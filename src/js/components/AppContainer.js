@@ -180,8 +180,7 @@ class AppContainer {
   }
 
   handleRegisteredEvent() {
-    history.pushState({ registered: true }, null, "/login");
-    this.renderRoute(this.contentContainer, this.loginComponent);
+    location.replace("/login?registered=true");
   }
 
   handleLoggedInEvent() {
