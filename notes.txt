@@ -1,0 +1,36 @@
+use query parameters for routing and managing state
+
+use web components where possible
+
+
+landing page:
+requires
+- know if the user is logged
+    - know available credits
+- get list of entries
+components:
+- header
+    - logo
+    - profile icon with credit status and button
+- navigation (tabs). switch between Listings and auction
+- list with filtering and search
+
+https://docs.noroff.dev/auctionhouse-endpoints/listings
+
+base path: https://api.noroff.dev/api/v1
+
+GET /auction/auth/register
+GET /auction/auth/login
+
+GET /auction/listings
+GET /auction/listings/<id>
+POST /auction/listings
+PUT /auction/listings/<id>
+DELETE /auction/listings/<id>
+POST /auction/listings/<id>/bids
+
+GET /auction/profiles
+GET /auction/profiles/<name>
+PUT /auction/profiles/<name>/media
+GET /auction/profiles/<name>/listings
+GET /auction/profiles/<name>/bids

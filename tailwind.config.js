@@ -2,7 +2,11 @@
 export default {
   content: ["./index.html", "./src/**/*.{html,css,js}"],
   theme: {
+    fontFamily: {
+      sans: ["Source Sans", "sans-serif"],
+      serif: ["Bree Serif", "serif"],
+    },
     extend: {},
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 };
