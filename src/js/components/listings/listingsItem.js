@@ -8,10 +8,11 @@ dayjs.extend(relativeTime);
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-function listingItem(listing) {
+function listingItem(listing, wins = []) {
   const html = `
   <div id="container" class="relative flex max-[350px]:flex-col rounded-xl min-[350px]:h-96 bg-slate-200 border border-gray-100 p-2">
-        <img id="image" alt="" class="rounded-xl object-cover mx-auto">            
+  <span id="winIndicator" class="absolute right-4 top-4 hidden bg-yellow-500 text-slate-900 px-4 py-2 rounded-full text-xs font-bold tracking-wider uppercase">BID WINNER</span>
+    <img id="image" alt="" class="hidden rounded-xl object-cover mx-auto">            
         <div id="glassPanel" class="min-[350px]:absolute grid gap-3 items-center bottom-0 min-[375px]:left-0 min-[375px]:right-0 min-[375px]:mx-auto max-[375px]:text-sm bg-gray-100 bg-opacity-50 backdrop-blur-lg rounded-lg p-4 transition-all">
           <div class="overflow-hidden">
             <h2 id="title" title="" class="font-bold tracking-wider uppercase text-xs pb-1 text-gray-800 max-w-lg truncate cursor-help"></h2>  
@@ -43,6 +44,12 @@ function listingItem(listing) {
   const image = component.querySelector("#image");
   const endsAtElement = component.querySelector("#endsAt");
 
+  const win = wins.find((win) => win === listing.id);
+  if (win) {
+    const winIndicator = component.querySelector("#winIndicator");
+    winIndicator.classList.remove("hidden");
+  }
+
   const highestBid = listing.bids.reduce(
     (prev, current) => {
       return prev.amount > current.amount ? prev : current;
@@ -55,28 +62,33 @@ function listingItem(listing) {
   description.textContent = listing.description;
   description.title = listing.description;
 
-  image.addEventListener("error", () => {
-    container.removeChild(image);
-    const noImage = document.createElement("div");
-    noImage.classList.add(
-      "bg-gray-900",
-      "bg-opacity-50",
-      "backdrop-blur-lg",
-      "rounded-lg",
-      "p-4",
-      "flex",
-      "justify-center",
-      "items-start",
-      "text-gray-600",
-      "text-xs",
-      "font-bold",
-      "uppercase",
-      "w-full",
-    );
-    noImage.textContent = "No Image";
-    container.prepend(noImage);
-  });
-  image.src = listing.media[0];
+  loadImage(listing.media[0])
+    .then((img) => {
+      image.src = img.src;
+      image.classList.remove("hidden");
+    })
+    .catch((e) => {
+      console.error(e);
+      container.removeChild(image);
+      const noImage = document.createElement("div");
+      noImage.classList.add(
+        "bg-gray-900",
+        "bg-opacity-50",
+        "backdrop-blur-lg",
+        "rounded-lg",
+        "p-4",
+        "flex",
+        "justify-center",
+        "items-start",
+        "text-gray-600",
+        "text-xs",
+        "font-bold",
+        "uppercase",
+        "w-full",
+      );
+      noImage.textContent = "No Image";
+      container.prepend(noImage);
+    });
   image.alt = listing.title;
   bids.textContent = highestBid.amount;
 
@@ -137,6 +149,19 @@ function listingItem(listing) {
 
   return component;
 }
+
+const loadImage = (path) => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.src = path;
+    img.onload = () => {
+      resolve(img);
+    };
+    img.onerror = (e) => {
+      reject(e);
+    };
+  });
+};
 
 function renderTimer(startsAt, endsAt) {
   const endsInDays = endsAt.diff(startsAt, "day");
