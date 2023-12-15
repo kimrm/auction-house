@@ -14,7 +14,11 @@ function listingsIndex(searchQuery = "") {
     <input type="radio" id="sortNew" name="sortOrder" value="newlyCreated">
   </div>
 </div>
-<div id="listings" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3"></div>
+<div id="listings" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+  <div class="m-auto md-col-span-2 lg:col-span-3 mt-12">
+    <p class="font-bold uppercase text-sm tracking-wider text-gray-700">Loading listings...</p>
+  </div>
+</div>
 `;
   const component = createComponent(html);
 
@@ -24,7 +28,7 @@ function listingsIndex(searchQuery = "") {
     _bids: "true",
     _seller: "true",
     _active: "true",
-    limit: 100,
+    limit: 20,
     offset: 0,
   };
 
@@ -50,9 +54,8 @@ function listingsIndex(searchQuery = "") {
 
 function loadListings(options, component, searchQuery = "") {
   const listingsContainer = component.querySelector("#listings");
-  listingsContainer.innerHTML = "";
-  console.log("load listings");
   fetchAllListings(options).then((data) => {
+    listingsContainer.innerHTML = "";
     const searchQueryLower = searchQuery.toLowerCase(); // Convert search query to lowercase
 
     const filteredData = data.filter((item) => {
@@ -88,10 +91,11 @@ async function fetchAllListings(options, isSearch = false) {
       const response = await listings({ ...options, offset });
       allListings.push(...response);
 
-      // Update this condition based on how your API indicates there's no more data
       if (response.length < options.limit) {
         hasMore = false;
       }
+
+      hasMore = false;
 
       offset += options.limit;
     }

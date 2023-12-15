@@ -51,10 +51,8 @@ function listingsDetail(id) {
 
         <div class="mb-5">
             <h3 class="text-sm font-bold mb-3 uppercase tracking-wider text-slate-500">Highest bid</h3>
-            <div class="flex gap-2">
-              <div id="bids" class="font-bold"></div>
-              <button type="button" id="bidHistoryButton" class="hidden text-blue-900">View bids history</button>
-            </div>
+            <div id="bids" class="font-bold"></div>
+            <button type="button" id="bidHistoryButton" class="hidden text-blue-900">View bids history</button>
             <div id="bidHistoryContainer" class="hidden flex-col gap-2 mt-2">
 
             </div>
@@ -131,13 +129,18 @@ function listingsDetail(id) {
   listingsDetailCall(id, { _seller: true, _bids: true }).then((data) => {
     console.log("listingdetail: ", data);
 
-    image.src = data.media[0];
+    image.src = data.media[0] ?? "";
 
     const imageThumbnails = data.media.map((media) => {
       return imageThumbnail(media);
     });
 
     imageThumbnailsContainer.append(...imageThumbnails);
+
+    document.addEventListener("imageThumbnail_imageClicked", (event) => {
+      console.log("image clicked: ", event.detail.image);
+      image.src = event.detail.image;
+    });
 
     title.textContent = data.title;
     description.textContent = data.description;
@@ -200,7 +203,7 @@ function listingsDetail(id) {
     }
 
     if (highestBid) {
-      bids.textContent = `${highestBid.amount} credits by ${highestBid.bidderName}`;
+      bids.textContent = `${highestBid.amount} credit - ${highestBid.bidderName}`;
     } else {
       bids.textContent = "No bids yet";
     }
