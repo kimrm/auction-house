@@ -19,7 +19,9 @@ function header() {
           <button id="profileButton" class="hidden md:flex gap-2 items-center border-0 border-slate-300 rounded-xl p-2">${
             profile
               ? `<span>${profile.name}</span> 
-              <img class="object-fit h-7 rounded-full custom-position" width="28" src=${profile.avatar}>`
+              <img class="object-fit h-7 rounded-full custom-position" width="28" src=${
+                profile.avatar === "" ? userIcon : profile.avatar
+              }>`
               : `<img height="20" width="20" src=${userIcon}>`
           }
           </button>
