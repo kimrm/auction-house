@@ -24,7 +24,9 @@ function listings(searchQuery = "") {
       pageContentContainer.append(listingsForm());
       break;
     case "listings/my-bids":
-      pageContentContainer.append(myBids());
+      myBids().then((component) => {
+        pageContentContainer.append(component);
+      });
       break;
     default:
       pageContentContainer.append(listingIndex(searchQuery));
@@ -41,7 +43,9 @@ function listings(searchQuery = "") {
         pageContentContainer.append(listingsForm());
         break;
       case "my-bids":
-        pageContentContainer.append(myBids());
+        myBids().then((component) => {
+          pageContentContainer.append(component);
+        });
         break;
       default:
         break;
