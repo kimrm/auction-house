@@ -8,6 +8,8 @@ import timezone from "dayjs/plugin/timezone";
 import { detailsModalClosedEvent } from "../../customEvents";
 import { routeChangedEvent } from "../../customEvents";
 import imageThumbnail from "./imageThumbnail";
+import lazyLoadImage from "../../utils/loadImage";
+import getAuth from "../../functions/auth/getAuth";
 
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
@@ -19,9 +21,9 @@ function listingsDetail(id) {
     <div class="absolute top-1 right-1 px-4 py-2 bg-slate-50 rounded-full border border-slate-200">
         <button id="closeButton" class="text-3xl">&times;</button>  
     </div>
-    <div class="md:col-span-3 bg-gray-100 rounded-lg p-4">
-        <img id="image" class="rounded-xl object-cover mx-auto h-96" src="">        
-        <div id="imageThumbnails" class="flex flex-row justify-center flex-wrap gap-2 mt-2"></div>
+    <div id="imageGallery" class="md:col-span-3 bg-gray-100 rounded-lg p-4">
+        <img id="image" class="hidden rounded-xl object-cover mx-auto h-96" src="">        
+        <div id="imageThumbnails" class="hidden flex-row justify-center flex-wrap gap-2 mt-2"></div>
     </div>
     <div class="md:col-span-2 p-2">
     <div class="mb-5">
@@ -53,8 +55,13 @@ function listingsDetail(id) {
             <h3 class="text-sm font-bold mb-3 uppercase tracking-wider text-slate-500">Highest bid</h3>
             <div id="bids" class="font-bold"></div>
             <button type="button" id="bidHistoryButton" class="hidden text-blue-900">View bids history</button>
-            <div id="bidHistoryContainer" class="hidden flex-col gap-2 mt-2">
-
+            <div id="bidHistoryContainer" class="hidden flex-col gap-2 mt-2"></div>
+            <div id="bidWinnerInformation" class="hidden flex-col gap-2 mt-6">
+                <h3 class="text-sm font-bold mb-3 uppercase tracking-wider text-slate-500">Winner</h3>
+                <div id="winnerName" class="font-bold"></div>
+                <div id="winnerEmail" class="font-bold hidden">Email</div>
+                <div id="winnerMessage" class="hidden">You will be contacted by the seller to arrange payment and delivery.</div>
+                <div id="sellerMessage" class="hidden">Contact the bid winner to arrange payment and delivery.</div>
             </div>
         </div>
         
@@ -74,6 +81,8 @@ function listingsDetail(id) {
     </div>  
 </div>`;
   const component = createComponent(html);
+
+  const loggedInProfile = getAuth();
 
   const title = component.querySelector("#title");
   const description = component.querySelector("#description");
@@ -129,17 +138,46 @@ function listingsDetail(id) {
   listingsDetailCall(id, { _seller: true, _bids: true }).then((data) => {
     console.log("listingdetail: ", data);
 
-    image.src = data.media[0] ?? "";
+    const winner = getWinner(data.bids);
 
-    const imageThumbnails = data.media.map((media) => {
-      return imageThumbnail(media);
-    });
+    console.log("winner: ", winner);
+    console.log("loggedInProfile: ", loggedInProfile);
 
-    imageThumbnailsContainer.append(...imageThumbnails);
+    if (data.isEnded) {
+      const winnerInformation = component.querySelector(
+        "#bidWinnerInformation",
+      );
+      const winnerName = component.querySelector("#winnerName");
+      const winnerEmail = component.querySelector("#winnerEmail");
+      const winnerMessage = component.querySelector("#winnerMessage");
+      const sellerMessage = component.querySelector("#sellerMessage");
 
-    document.addEventListener("imageThumbnail_imageClicked", (event) => {
-      console.log("image clicked: ", event.detail.image);
-      image.src = event.detail.image;
+      winnerName.textContent = winner.bidderName;
+
+      winnerInformation.classList.remove("hidden");
+      if (winner.bidderName === loggedInProfile.name) {
+        winnerEmail.textContent = "";
+        sellerMessage.classList.remove("hidden");
+        winnerMessage.classList.remove("hidden");
+      }
+    }
+
+    lazyLoadImage(data.media[0]).then((path) => {
+      image.src = path;
+      image.classList.remove("hidden");
+      const imageThumbnails = data.media.map((media) => {
+        return imageThumbnail(media);
+      });
+
+      imageThumbnailsContainer.append(...imageThumbnails);
+
+      imageThumbnailsContainer.classList.remove("hidden");
+      imageThumbnailsContainer.classList.add("flex");
+
+      document.addEventListener("imageThumbnail_imageClicked", (event) => {
+        console.log("image clicked: ", event.detail.image);
+        image.src = event.detail.image;
+      });
     });
 
     title.textContent = data.title;
@@ -308,6 +346,14 @@ function renderTimer(startsAt, endsAt, component) {
   }
 
   return ended;
+}
+
+function getWinner(bids) {
+  const highestBid = bids.reduce((prev, current) => {
+    return prev.amount > current.amount ? prev : current;
+  }, 0);
+
+  return highestBid;
 }
 
 export default listingsDetail;
