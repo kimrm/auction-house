@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import lazyLoadImage from "../../utils/loadImage";
 
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
@@ -62,9 +63,9 @@ function listingItem(listing, wins = []) {
   description.textContent = listing.description;
   description.title = listing.description;
 
-  loadImage(listing.media[0])
-    .then((img) => {
-      image.src = img.src;
+  lazyLoadImage(listing.media[0])
+    .then((src) => {
+      image.src = src;
       image.classList.remove("hidden");
     })
     .catch((e) => {
@@ -149,19 +150,6 @@ function listingItem(listing, wins = []) {
 
   return component;
 }
-
-const loadImage = (path) => {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.src = path;
-    img.onload = () => {
-      resolve(img);
-    };
-    img.onerror = (e) => {
-      reject(e);
-    };
-  });
-};
 
 function renderTimer(startsAt, endsAt) {
   const endsInDays = endsAt.diff(startsAt, "day");
