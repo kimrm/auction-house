@@ -28,7 +28,7 @@ function listingsIndex(searchQuery = "") {
     _bids: "true",
     _seller: "true",
     _active: "true",
-    limit: 20,
+    limit: 100,
     offset: 0,
   };
 
