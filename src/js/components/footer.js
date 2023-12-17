@@ -1,17 +1,22 @@
 import createComponent from "../utils/createComponent";
 import getAuth from "../functions/auth/getAuth";
+import profile from "../functions/api/profile";
 import { routeChangedEvent } from "../customEvents";
+import listingsForProfile from "../functions/api/listingsForProfile";
+import bids from "../functions/api/bids";
 
 function footer() {
-  const profile = getAuth();
+  const profileData = getAuth();
+  if (!profileData) {
+    return createComponent(`<div></div>`);
+  }
+
   const html = `
 <footer class="fixed bottom-0 left-0 right-0 flex items-center bg-slate-900 text-white">
   <div class="container mx-auto flex gap-8 p-4"> 
-    <div class="hidden md:block text-blue-50"><a id="myListingsLink" class="hover:text-blue-300" href="/listings/my-listings">My listings <span class="ml-1 py-1 px-2 rounded-full outline outline-yellow-100">30</span></a></div> 
-    <div class="hidden md:block text-blue-50"><a id="myBidsLink" class="hover:text-blue-300" href="/listings/my-bids">My bids <span class="ml-1 py-1 px-2 rounded-full outline outline-yellow-100">3</span></a></div>        
-    <div class="text-blue-50"><a id="profileLink" class="hover:text-blue-300" href="/profile">My credits <span class="ml-1 py-1 px-2 rounded-full outline outline-yellow-100">${
-      profile && profile.credits
-    }</span></a></div>
+    <div class="hidden md:block text-blue-50"><a id="myListingsLink" class="hover:text-blue-300" href="/listings/my-listings">My listings <span id="myListingsCount" class="ml-1 py-1 px-2 rounded-full outline outline-yellow-100"></span></a></div> 
+    <div class="hidden md:block text-blue-50"><a id="myBidsLink" class="hover:text-blue-300" href="/listings/my-bids">My bids <span id="myBidsCount" class="ml-1 py-1 px-2 rounded-full outline outline-yellow-100"></span></a></div>        
+    <div class="text-blue-50"><a id="profileLink" class="hover:text-blue-300" href="/profile">My credits <span id="credits" class="ml-1 py-1 px-2 rounded-full outline outline-yellow-100"></span></a></div>
     <button id="footer_menuButton" class="md:hidden">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
       <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l7.5-7.5 7.5 7.5m-15 6l7.5-7.5 7.5 7.5" />
@@ -21,6 +26,29 @@ function footer() {
 </footer>`;
 
   const component = createComponent(html);
+
+  profile(profileData.name).then((profile) => {
+    const credits = component.querySelector("#credits");
+    credits.textContent = profile.credits;
+  });
+
+  window.addEventListener("creditsChanged", (event) => {
+    const credits = component.querySelector("#credits");
+    credits.textContent = event.detail.credits;
+  });
+
+  const myListingsCount = component.querySelector("#myListingsCount");
+  listingsForProfile(profileData.name, {}).then((listings) => {
+    myListingsCount.textContent = listings.length;
+  });
+
+  const myBidsCount = component.querySelector("#myBidsCount");
+  bids(profileData.name, {}).then((bids) => {
+    const uniqueListingBids = Array.from(
+      new Map(bids.map((bid) => [bid.listing.id, bid])).values(),
+    );
+    myBidsCount.textContent = uniqueListingBids.length;
+  });
 
   const menuButton = component.querySelector("#footer_menuButton");
   const menu = footerMenuPopUp();

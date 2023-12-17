@@ -10,6 +10,7 @@ import { routeChangedEvent } from "../../customEvents";
 import imageThumbnail from "./imageThumbnail";
 import lazyLoadImage from "../../utils/loadImage";
 import getAuth from "../../functions/auth/getAuth";
+import storeAuth from "../../functions/auth/storeAuth";
 
 dayjs.extend(relativeTime);
 dayjs.extend(utc);
@@ -119,6 +120,16 @@ function listingsDetail(id) {
         bidInput.value = highestBid.amount + 1;
         bidInput.min = highestBid.amount + 1;
         bids.textContent = `${highestBid.amount} by ${highestBid.bidderName}`;
+
+        const creditsNow = loggedInProfile.credits - bid;
+        loggedInProfile.credits = creditsNow;
+        storeAuth(loggedInProfile);
+
+        const creditsChangedEvent = new CustomEvent("creditsChanged", {
+          detail: { credits: creditsNow },
+        });
+
+        window.dispatchEvent(creditsChangedEvent);
       })
       .catch(() => {
         getListingData(id).then((data) => {
