@@ -13,19 +13,20 @@ function header() {
         <a id="logoLink" href="/"><h1 class="font-serif font-bold text-xl"></h1></a>
         <form id="searchForm" class="flex gap-2 items-center">
           <input id="searchInput" class=" w-36 md:w-80 rounded-lg border border-slate-300 p-2 text-gray-600 text-sm font-bold" type="search" placeholder="Search for listings">
+          <label for="searchInput" class="sr-only">Search for listings</label>
           <button id="searchButton" class="hidden md:block bg-deep-blue-500 hover:bg-deep-blue-400 text-white uppercase font-bold tracking-wider text-sm rounded-lg p-2">Search</button>
         </form>
         <div class="flex justify-between items-center gap-4">          
           <button id="profileButton" class="hidden md:flex gap-2 items-center border-0 hover:text-blue-500 border-slate-300 rounded-xl p-2">${
             profile
               ? `<span>${profile.name}</span> 
-              <img class="object-fit h-7 rounded-full custom-position" width="28" src=${
+              <img alt="Profile image" class="object-fit h-7 rounded-full custom-position" width="28" src=${
                 profile.avatar === "" ? userIcon : profile.avatar
               }>`
-              : `<img height="20" width="20" src=${userIcon}>`
+              : `<img alt="Profile placeholder image" height="20" width="20" src=${userIcon}>`
           }
           </button>
-          <button id="menuButton"><img height="24" width="24" src=${menuIcon}></button>
+          <button id="menuButton"><img alt="Menu button icon" height="24" width="24" src=${menuIcon}></button>
           <div id="menu" class="hidden absolute z-20 top-20 left-0 md:left-auto right-0 bg-white border border-slate-300 rounded-lg">
             <ul class="flex flex-col gap-1">
               ${

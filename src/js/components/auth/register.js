@@ -98,10 +98,10 @@ function validateName(form, name) {
 
 function validateEmail(form, email) {
   const emailValidationMessage = form.querySelector("#emailValidationMessage");
-  let emailRegex = /^[A-Za-z0-9._%+-]{2,}@(noroff\.no|stud\.noroff\.no)$/;
+  let emailRegex = /^[A-Za-z0-9._%+-]{2,}@(stud\.noroff\.no)$/;
   if (!emailRegex.test(email)) {
     emailValidationMessage.textContent =
-      "Email is not a valid noroff.no or stud.noroff.no e-mail address.";
+      "Email is not a valid stud.noroff.no e-mail address.";
     return false;
   } else {
     emailValidationMessage.textContent = "";
