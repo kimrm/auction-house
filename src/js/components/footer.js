@@ -18,6 +18,7 @@ function footer() {
     <div class="hidden md:block text-blue-50"><a id="myBidsLink" class="hover:text-blue-300" href="/listings/my-bids">My bids <span id="myBidsCount" class="ml-1 py-1 px-2 rounded-full outline outline-yellow-100"></span></a></div>        
     <div class="text-blue-50"><a id="profileLink" class="hover:text-blue-300" href="/profile">My credits <span id="credits" class="ml-1 py-1 px-2 rounded-full outline outline-yellow-100"></span></a></div>
     <button id="footer_menuButton" class="md:hidden">
+    <span class="sr-only">Open menu</span>
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
       <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l7.5-7.5 7.5 7.5m-15 6l7.5-7.5 7.5 7.5" />
       </svg>
