@@ -14,23 +14,23 @@ function listingItem(listing, wins = []) {
   <div id="container" class="relative flex max-[350px]:flex-col rounded-xl min-[350px]:h-96 bg-slate-200 border border-gray-100 p-2">
   <span id="winIndicator" class="absolute right-4 top-4 hidden bg-yellow-500 text-slate-900 px-4 py-2 rounded-full text-xs font-bold tracking-wider uppercase">BID WINNER</span>
     <img id="image" alt="" class="hidden rounded-xl object-cover mx-auto">            
-        <div id="glassPanel" class="min-[350px]:absolute grid gap-3 items-center bottom-0 min-[375px]:left-0 min-[375px]:right-0 min-[375px]:mx-auto max-[375px]:text-sm bg-gray-100 bg-opacity-50 backdrop-blur-lg rounded-lg p-4 transition-all">
+        <div id="glassPanel" class="min-[350px]:absolute grid gap-3 items-center bottom-0 min-[375px]:left-0 min-[375px]:right-0 min-[375px]:mx-auto max-[375px]:text-sm bg-gray-100 bg-opacity-80 backdrop-blur-lg rounded-lg p-4 transition-all">
           <div class="overflow-hidden">
             <h2 id="title" title="" class="font-bold tracking-wider uppercase text-xs pb-1 text-gray-800 max-w-lg truncate cursor-help"></h2>  
             <p id="description" class="text-gray-950 truncate cursor-help" title="Lorem ipsum">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quibusdam.</p>                              
             <div class="my-2 flex justify-between border-t border-slate-500 py-2">
               <div>
-                <span class="uppercase text-xs tracking-wider text-gray-800">Highest bid:</span> 
+                <span class="uppercase text-xs tracking-wider text-gray-950">Highest bid:</span> 
                 <span id="bids" class="font-bold"></span>
               </div>
               <div>
-                <span class="uppercase text-xs tracking-wider text-gray-800">Ends in:</span>
+                <span class="uppercase text-xs tracking-wider text-gray-950">Ends in:</span>
                 <span id="endsAt" class=" font-bold"></span> 
               </div>
             </div>
           </div>            
           <div>
-            <button id="viewListingButton" class="bg-white w-full rounded p-4 text-blue-950 uppercase text-xs leading-none font-bold tracking-wider hover:bg-slate-100 hover:shadow-md hover:scale-110 transition-transform">View Item</button>               
+            <button id="viewListingButton_${listing.id}" class="bg-white w-full rounded p-4 text-blue-950 uppercase text-xs leading-none font-bold tracking-wider hover:bg-slate-100 hover:shadow-md hover:scale-110 transition-transform">View Item</button>               
           </div>
         </div>                        
     </div>    
@@ -68,21 +68,20 @@ function listingItem(listing, wins = []) {
       image.src = src;
       image.classList.remove("hidden");
     })
-    .catch((e) => {
-      console.error(e);
+    .catch(() => {
       container.removeChild(image);
       const noImage = document.createElement("div");
       noImage.classList.add(
         "bg-gray-900",
-        "bg-opacity-50",
         "backdrop-blur-lg",
         "rounded-lg",
         "p-4",
         "flex",
         "justify-center",
         "items-start",
-        "text-gray-600",
+        "text-gray-200",
         "text-xs",
+        "tracking-wider",
         "font-bold",
         "uppercase",
         "w-full",
@@ -136,7 +135,9 @@ function listingItem(listing, wins = []) {
     endsAtElement.textContent = "Ended";
   }
 
-  const viewListingButton = component.querySelector("#viewListingButton");
+  const viewListingButton = component.querySelector(
+    `#viewListingButton_${listing.id}`,
+  );
   viewListingButton.addEventListener("click", () => {
     document.dispatchEvent(
       new CustomEvent("routeChanged", {

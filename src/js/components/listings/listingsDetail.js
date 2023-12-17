@@ -23,42 +23,42 @@ function listingsDetail(id) {
         <button id="closeButton" class="text-3xl">&times;</button>  
     </div>
     <div id="imageGallery" class="md:col-span-3 bg-gray-100 rounded-lg p-4">
-        <img id="image" class="hidden rounded-xl object-cover mx-auto h-96" src="">        
+        <img id="image" alt="" class="hidden rounded-xl object-cover mx-auto h-96" src="">        
         <div id="imageThumbnails" class="hidden flex-row justify-center flex-wrap gap-2 mt-2"></div>
     </div>
     <div class="md:col-span-2 p-2">
     <div class="mb-5">
     
     <h2 id="title" class="text-3xl capitalize font-bold mb-3 break-word overflow-clip text-ellipsis"></h2>
-            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-2">Auction ends in</h3>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-gray-600 mb-2">Auction ends in</h3>
             <div class="flex gap-1" id="timerContainer">
-                <div id="daysDisplay" class="grid grid-rows-2 bg-slate-100 bg-gradient-to-t from-slate-300 to-slate-50 rounded w-16 p-1 border border-slate-300">
-                    <div class="text-xs text-center uppercase tracking-wider font-bold text-slate-500 mb-1 border-b border-slate-300">Days</div>
-                    <div id="endsInDays" class="text-center text-lg text-slate-500 animate-in slide-in-from-bottom">-</div>
+                <div id="daysDisplay" class="grid grid-rows-2 bg-slate-50 bg-gradient-to-t from-slate-200 to-slate-50 rounded w-16 p-1 border border-slate-300">
+                    <div class="text-xs text-center uppercase tracking-wider font-bold text-gray-600 mb-1 border-b border-slate-300">Days</div>
+                    <div id="endsInDays" class="text-center text-lg text-gray-600 animate-in slide-in-from-bottom">-</div>
                 </div>
-                <div id="hoursDisplay" class="grid grid-rows-2 bg-slate-100 bg-gradient-to-t from-slate-300 to-slate-50 rounded w-16 p-1 border border-slate-300">
-                    <div class="text-xs text-center uppercase tracking-wider font-bold text-slate-500 mb-1 border-b border-slate-300">hrs.</div>
-                    <div id="endsInHours" class="text-center text-lg text-slate-600 animate-in slide-in-from-bottom">-</div>
+                <div id="hoursDisplay" class="grid grid-rows-2 bg-slate-50 bg-gradient-to-t from-slate-200 to-slate-50 rounded w-16 p-1 border border-slate-300">
+                    <div class="text-xs text-center uppercase tracking-wider font-bold text-gray-600 mb-1 border-b border-slate-300">hrs.</div>
+                    <div id="endsInHours" class="text-center text-lg text-gray-600 animate-in slide-in-from-bottom">-</div>
                 </div>          
-                <div id="minutesDisplay" class="grid grid-rows-2 bg-slate-100 bg-gradient-to-t from-slate-300 to-slate-50 rounded w-16 p-1 border border-slate-300 overflow-hidden">
-                    <div class="text-xs text-center uppercase tracking-wider font-bold text-slate-500 mb-1 border-b border-slate-300">Min.</div>
-                    <div id="endsInMinutes" class="text-center text-lg text-slate-700 animate-in slide-in-from-bottom">-</div>
+                <div id="minutesDisplay" class="grid grid-rows-2 bg-slate-50 bg-gradient-to-t from-slate-200 to-slate-50 rounded w-16 p-1 border border-slate-300 overflow-hidden">
+                    <div class="text-xs text-center uppercase tracking-wider font-bold text-gray-600 mb-1 border-b border-slate-300">Min.</div>
+                    <div id="endsInMinutes" class="text-center text-lg text-gray-700 animate-in slide-in-from-bottom">-</div>
                 </div>  
-                <div id="secondsDisplay" class="grid grid-rows-2 bg-slate-100 bg-gradient-to-t from-slate-300 to-slate-50 rounded w-16 p-1 border border-slate-300 overflow-hidden">
-                    <div class="text-xs text-center uppercase tracking-wider font-bold text-slate-500 mb-1 border-b border-slate-300">Sec.</div>
-                    <div id="endsInSeconds" class="text-center text-lg text-slate-800 animate-in slide-in-from-bottom">-</div>
+                <div id="secondsDisplay" class="grid grid-rows-2 bg-slate-50 bg-gradient-to-t from-slate-200 to-slate-50 rounded w-16 p-1 border border-slate-300 overflow-hidden">
+                    <div class="text-xs text-center uppercase tracking-wider font-bold text-gray-600 mb-1 border-b border-slate-300">Sec.</div>
+                    <div id="endsInSeconds" class="text-center text-lg text-gray-800 animate-in slide-in-from-bottom">-</div>
                 </div>                
             </div>
         </div>        
         <p id="description" class="mb-5 break-word overflow-clip text-ellipsis"></p>
 
         <div class="mb-5">
-            <h3 class="text-sm font-bold mb-3 uppercase tracking-wider text-slate-500">Highest bid</h3>
+            <h3 class="text-sm font-bold mb-3 uppercase tracking-wider text-gray-600">Highest bid</h3>
             <div id="bids" class="font-bold"></div>
             <button type="button" id="bidHistoryButton" class="hidden text-blue-900">View bids history</button>
             <div id="bidHistoryContainer" class="hidden flex-col gap-2 mt-2"></div>
             <div id="bidWinnerInformation" class="hidden flex-col gap-2 mt-6">
-                <h3 class="text-sm font-bold mb-3 uppercase tracking-wider text-slate-500">Winner</h3>
+                <h3 class="text-sm font-bold mb-3 uppercase tracking-wider text-gray-600">Winner</h3>
                 <div id="winnerName" class="font-bold"></div>
                 <div id="winnerEmail" class="font-bold hidden">Email</div>
                 <div id="winnerMessage" class="hidden">You will be contacted by the seller to arrange payment and delivery.</div>
@@ -68,14 +68,15 @@ function listingsDetail(id) {
         
         <form id="bidForm" class="mb-5 flex flex-col gap-2">
           <div class="flex flex-row justify-between gap-2 border-2 border-[#1D3461] rounded-lg">
-            <input id="bidInput" name="bid" type="number" class="border-0 p-2 text-gray-950 bg-gray-100 text-sm font-bold w-24 outline-none m-1">
+          <label for="bidInput" class="sr-only">Bid</label>  
+          <input id="bidInput" name="bid" type="number" class="border-0 p-2 text-gray-950 bg-gray-100 text-sm font-bold w-24 outline-none m-1">
             <input type="submit" value="Place Bid" class="bg-[#1D3461] text-white uppercase font-bold tracking-wider text-xs border outline-none rounded p-2 mx-auto w-full">
           </div>
           <p id="errorMessage" class="text-red-500"></p>
         </form>
         
         <div class="mt-5 ">
-        <h3 class="text-sm font-bold mb-3 uppercase tracking-wider text-slate-500">Sold by</h3>
+        <h3 class="text-sm font-bold mb-3 uppercase tracking-wider text-gray-600">Sold by</h3>
         <button id="seller" class="text-blue-900"></button>
         </div>
         
@@ -147,12 +148,7 @@ function listingsDetail(id) {
   });
 
   listingsDetailCall(id, { _seller: true, _bids: true }).then((data) => {
-    console.log("listingdetail: ", data);
-
     const winner = getWinner(data.bids);
-
-    console.log("winner: ", winner);
-    console.log("loggedInProfile: ", loggedInProfile);
 
     if (data.isEnded) {
       const winnerInformation = component.querySelector(
@@ -166,7 +162,7 @@ function listingsDetail(id) {
       winnerName.textContent = winner.bidderName;
 
       winnerInformation.classList.remove("hidden");
-      if (winner.bidderName === loggedInProfile.name) {
+      if (loggedInProfile && winner.bidderName === loggedInProfile.name) {
         winnerEmail.textContent = "";
         sellerMessage.classList.remove("hidden");
         winnerMessage.classList.remove("hidden");
@@ -175,6 +171,7 @@ function listingsDetail(id) {
 
     lazyLoadImage(data.media[0]).then((path) => {
       image.src = path;
+      image.alt = data.title;
       image.classList.remove("hidden");
       const imageThumbnails = data.media.map((media) => {
         return imageThumbnail(media);
@@ -186,7 +183,6 @@ function listingsDetail(id) {
       imageThumbnailsContainer.classList.add("flex");
 
       document.addEventListener("imageThumbnail_imageClicked", (event) => {
-        console.log("image clicked: ", event.detail.image);
         image.src = event.detail.image;
       });
     });
@@ -347,7 +343,7 @@ function renderTimer(startsAt, endsAt, component) {
   ) {
     const endsAtElement = document.querySelector("#timerContainer");
     const bidForm = document.querySelector("#bidForm");
-    console.log("Element: ", endsAtElement);
+
     endsAtElement.innerHTML = "";
     endsAtElement.classList.add("text-red-950", "text-2xl", "font-bold");
     endsAtElement.textContent = "Ended";

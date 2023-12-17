@@ -3,7 +3,7 @@ import createComponent from "../../utils/createComponent";
 function imageThumbnail(image) {
   const html = `
 <div class="border rounded-xl overflow-clip">
-    <img class="object-cover mx-auto h-24 cursor-pointer" src="${image}">
+    <img alt="Image gallery thumbnail" class="object-cover mx-auto h-24 cursor-pointer" src="${image}">
 </div>
     `;
 

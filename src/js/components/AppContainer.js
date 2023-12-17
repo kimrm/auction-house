@@ -131,7 +131,6 @@ class AppContainer {
         this.renderComponent(this.listingsComponent);
         break;
       default:
-        console.log("route: ", route);
         if (route.includes("search")) {
           const searchQuery = route.split("/")[2];
           this.renderComponent(listings(searchQuery));
@@ -170,6 +169,7 @@ class AppContainer {
   handlePopStateEvent() {
     const path = window.location.pathname.replace("/", "");
     this.handleRoutes(path);
+    console.log("popstate in app");
   }
 
   handleRouteChangedEvent(event) {
