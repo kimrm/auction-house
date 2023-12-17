@@ -33,8 +33,6 @@ function listings(searchQuery = "") {
       break;
   }
 
-  console.log("path", path);
-
   document.addEventListener("pageTabNavigation_pageChanged", (event) => {
     pageContentContainer.innerHTML = "";
     switch (event.detail.page) {
@@ -52,10 +50,6 @@ function listings(searchQuery = "") {
       default:
         break;
     }
-  });
-
-  document.addEventListener("popstate", () => {
-    console.log("popstate in listings");
   });
 
   return component;

@@ -76,7 +76,14 @@ function header() {
   const logoLink = component.querySelector("#logoLink");
   logoLink.addEventListener("click", (event) => {
     event.preventDefault();
+    const pageChangedEvent = new CustomEvent("pageTabNavigation_pageChanged", {
+      bubbles: true,
+      detail: {
+        page: "listings",
+      },
+    });
     document.dispatchEvent(routeChangedEvent("listings"));
+    document.dispatchEvent(pageChangedEvent);
   });
 
   const profileButton = component.querySelector("#profileButton");
