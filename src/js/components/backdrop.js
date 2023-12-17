@@ -1,9 +1,7 @@
 import createComponent from "../utils/createComponent";
 
-function backdrop(opacity = 0.5) {
-  const html = `<div id="backdrop" class="fixed inset-0 bg-black bg-opacity-${
-    opacity * 100
-  } z-40 backdrop-blur"></div>`;
+function backdrop() {
+  const html = `<div id="backdrop" class="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm"></div>`;
   const component = createComponent(html);
 
   const backdrop = component.querySelector("#backdrop");

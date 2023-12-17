@@ -57,12 +57,12 @@ function listingsDetail(id) {
             <div id="bids" class="font-bold"></div>
             <button type="button" id="bidHistoryButton" class="hidden text-blue-900">View bids history</button>
             <div id="bidHistoryContainer" class="hidden flex-col gap-2 mt-2"></div>
-            <div id="bidWinnerInformation" class="hidden flex-col gap-2 mt-6">
-                <h3 class="text-sm font-bold mb-3 uppercase tracking-wider text-gray-600">Winner</h3>
+            <div id="bidWinnerInformation" class="hidden flex-col gap-2 mt-6 outline outline-yellow-600 p-2 rounded">
+                <h3 class="text-sm font-bold mb-3 uppercase tracking-wider text-gray-600">Bid Winner</h3>
                 <div id="winnerName" class="font-bold"></div>
-                <div id="winnerEmail" class="font-bold hidden">Email</div>
-                <div id="winnerMessage" class="hidden">You will be contacted by the seller to arrange payment and delivery.</div>
-                <div id="sellerMessage" class="hidden">Contact the bid winner to arrange payment and delivery.</div>
+                
+                <div id="winnerMessage" class="hidden text-green-900">You will be contacted by the seller to arrange payment and delivery.</div>
+                
             </div>
         </div>
         
@@ -155,16 +155,13 @@ function listingsDetail(id) {
         "#bidWinnerInformation",
       );
       const winnerName = component.querySelector("#winnerName");
-      const winnerEmail = component.querySelector("#winnerEmail");
+
       const winnerMessage = component.querySelector("#winnerMessage");
-      const sellerMessage = component.querySelector("#sellerMessage");
 
       winnerName.textContent = winner.bidderName;
 
       winnerInformation.classList.remove("hidden");
       if (loggedInProfile && winner.bidderName === loggedInProfile.name) {
-        winnerEmail.textContent = "";
-        sellerMessage.classList.remove("hidden");
         winnerMessage.classList.remove("hidden");
       }
     }

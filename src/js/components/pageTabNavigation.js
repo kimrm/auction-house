@@ -73,8 +73,6 @@ function pageTabNavigation() {
     setActiveButton(listingsButton, component);
   }
 
-  console.log(initialPath);
-
   return component;
 }
 
