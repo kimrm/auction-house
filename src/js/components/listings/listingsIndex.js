@@ -6,12 +6,12 @@ function listingsIndex(searchQuery = "") {
   const html = `
 <div class="mb-4 flex gap-2 items-center"> 
   <div>
-    <label for="sortEnding" class="text-xs uppercase font-bold tracking-wider ml-2">Ending soon</label>
-    <input type="radio" id="sortEnding" name="sortOrder" value="ending" checked>
+    <input class="hidden peer" type="radio" id="sortEnding" name="sortOrder" value="ending" checked>
+    <label for="sortEnding" class="text-xs uppercase font-bold tracking-wider ml-2 p-2 outline outline-white peer-checked:outline-blue-200 rounded cursor-pointer">Ending soon</label>    
   </div>
   <div>
-    <label for="sortNew" class="text-xs uppercase font-bold tracking-wider ml-2">Newly listed</label>
-    <input type="radio" id="sortNew" name="sortOrder" value="newlyCreated">
+    <input class="hidden peer" type="radio" id="sortNew" name="sortOrder" value="newlyCreated">
+    <label for="sortNew" class="text-xs uppercase font-bold tracking-wider ml-2 p-2 outline outline-white peer-checked:outline-blue-200 rounded cursor-pointer">Newly listed</label>    
   </div>
 </div>
 <div id="listings" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -56,13 +56,13 @@ function loadListings(options, component, searchQuery = "") {
   const listingsContainer = component.querySelector("#listings");
   fetchAllListings(options).then((data) => {
     listingsContainer.innerHTML = "";
-    const searchQueryLower = searchQuery.toLowerCase(); // Convert search query to lowercase
+    const searchQueryLower = searchQuery.toLowerCase();
 
     const filteredData = data.filter((item) => {
-      const titleLower = item.title ? item.title.toLowerCase() : ""; // Handle undefined and convert to lowercase
+      const titleLower = item.title ? item.title.toLowerCase() : "";
       const descriptionLower = item.description
         ? item.description.toLowerCase()
-        : ""; // Handle undefined and convert to lowercase
+        : "";
 
       return (
         titleLower.includes(searchQueryLower) ||
