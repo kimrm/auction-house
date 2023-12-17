@@ -161,7 +161,7 @@ function listingsDetail(id) {
       winnerName.textContent = winner.bidderName;
 
       winnerInformation.classList.remove("hidden");
-      if (winner.bidderName === loggedInProfile.name) {
+      if (loggedInProfile && winner.bidderName === loggedInProfile.name) {
         winnerEmail.textContent = "";
         sellerMessage.classList.remove("hidden");
         winnerMessage.classList.remove("hidden");
