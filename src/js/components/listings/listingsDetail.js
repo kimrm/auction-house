@@ -147,12 +147,7 @@ function listingsDetail(id) {
   });
 
   listingsDetailCall(id, { _seller: true, _bids: true }).then((data) => {
-    console.log("listingdetail: ", data);
-
     const winner = getWinner(data.bids);
-
-    console.log("winner: ", winner);
-    console.log("loggedInProfile: ", loggedInProfile);
 
     if (data.isEnded) {
       const winnerInformation = component.querySelector(
@@ -186,7 +181,6 @@ function listingsDetail(id) {
       imageThumbnailsContainer.classList.add("flex");
 
       document.addEventListener("imageThumbnail_imageClicked", (event) => {
-        console.log("image clicked: ", event.detail.image);
         image.src = event.detail.image;
       });
     });
@@ -347,7 +341,7 @@ function renderTimer(startsAt, endsAt, component) {
   ) {
     const endsAtElement = document.querySelector("#timerContainer");
     const bidForm = document.querySelector("#bidForm");
-    console.log("Element: ", endsAtElement);
+
     endsAtElement.innerHTML = "";
     endsAtElement.classList.add("text-red-950", "text-2xl", "font-bold");
     endsAtElement.textContent = "Ended";

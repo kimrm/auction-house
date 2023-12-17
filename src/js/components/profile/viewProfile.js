@@ -41,7 +41,6 @@ function viewProfile(name) {
   editAvatarForm.addEventListener("submit", (event) => {
     event.preventDefault();
     updateAvatar(name, avatarUrl.value).then((data) => {
-      console.log(data);
       const profileData = getAuth();
       profileData.avatar = data.avatar;
       storeAuth(profileData);

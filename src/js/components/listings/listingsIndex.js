@@ -75,8 +75,6 @@ function loadListings(options, component, searchQuery = "") {
     });
 
     listingsContainer.append(...items);
-
-    console.log("Data: ", filteredData);
   });
 }
 

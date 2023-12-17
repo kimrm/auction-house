@@ -70,14 +70,12 @@ function listingsForm() {
   minimizeMaximizeContainer.append(maximizeButton);
 
   minimizeButton.addEventListener("click", () => {
-    console.log("minimize");
     minimizeMaximizeContainer.innerHTML = "";
     minimizeMaximizeContainer.append(maximizeButton);
     form.classList.add("hidden");
   });
 
   maximizeButton.addEventListener("click", () => {
-    console.log("maximize");
     minimizeMaximizeContainer.innerHTML = "";
     minimizeMaximizeContainer.append(minimizeButton);
     form.classList.remove("hidden");
@@ -130,7 +128,6 @@ function listingsForm() {
         );
       })
       .catch((error) => {
-        console.log(error);
         const validationMessage = component.querySelector("#validationMessage");
         const validationMessageText = component.querySelector(
           "#validationMessageText",

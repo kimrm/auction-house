@@ -53,7 +53,6 @@ function footer() {
   const menuButton = component.querySelector("#footer_menuButton");
   const menu = footerMenuPopUp();
   menuButton.addEventListener("click", () => {
-    console.log("show menu");
     menu.classList.toggle("hidden");
   });
   const footerElement = component.querySelector("footer");

@@ -131,7 +131,6 @@ class AppContainer {
         this.renderComponent(this.listingsComponent);
         break;
       default:
-        console.log("route: ", route);
         if (route.includes("search")) {
           const searchQuery = route.split("/")[2];
           this.renderComponent(listings(searchQuery));
