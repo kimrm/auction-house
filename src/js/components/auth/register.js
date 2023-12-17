@@ -6,11 +6,11 @@ function register() {
   const html = `<div class="container mx-auto p-4">
     <h2 class="text-3xl font-bold mb-4">Register</h1>
     <p>Register to get access to bidding and adding listings. If you already have an account, please <a href="/login" id="loginLink" class="visited:text-blue-500">login</a></p>
-    <p id="validationMessage" class="hidden bg-red-700 text-red-100 p-4 mt-4 rounded"></p>
+    <p id="validationMessage" class="hidden bg-red-100 text-red-700 p-4 mt-4 rounded"></p>
     <form class="flex flex-col gap-4 mt-6 md:w-2/3 lg:w-1/2 bg-gray-100 rounded-lg p-4">
         <div class="flex flex-col">
             <label for="name">Username</label>
-            <input id="name" name="name" type="text" class="border border-gray-300 p-2 rounded-lg">
+            <input id="name" name="name" type="text" maxlength="20" class="border border-gray-300 p-2 rounded-lg">
             <span id="nameValidationMessage" class="mt-2 text-xs text-red-700"></span>
         </div>        
         <div class="flex flex-col">
@@ -57,22 +57,25 @@ function handleSubmit(event) {
     const validationMessage = document.querySelector("#validationMessage");
     validationMessage.textContent = "Please fix the validation errors below.";
     validationMessage.classList.remove("hidden");
-    return;
+    throw new Error("Validation failed.");
   }
 
   const formData = new FormData(form);
   formData.delete("confirmPassword");
   const data = Object.fromEntries(formData.entries());
-  registerCall(data).then((result) => {
-    if (result.errors) {
-      const validationMessage = document.querySelector("#validationMessage");
-      validationMessage.textContent = `Could not register your account: ${result.errors[0].message}`;
-      validationMessage.classList.remove("hidden");
-      return;
-    }
+  registerCall(data)
+    .then((result) => {
+      if (result.errors) {
+        throw new Error(result.errors[0].message);
+      }
 
-    document.dispatchEvent(registeredEvent());
-  });
+      document.dispatchEvent(registeredEvent());
+    })
+    .catch((error) => {
+      const validationMessage = document.querySelector("#validationMessage");
+      validationMessage.textContent = `Could not register your account: ${error}`;
+      validationMessage.classList.remove("hidden");
+    });
 }
 
 function handleLoginClick(event) {
