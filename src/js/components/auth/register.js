@@ -10,29 +10,29 @@ function register() {
     <form class="flex flex-col gap-4 mt-6 md:w-2/3 lg:w-1/2 bg-gray-100 rounded-lg p-4">
         <div class="flex flex-col">
             <label for="name">Username</label>
-            <input id="name" name="name" type="text" maxlength="20" class="border border-gray-300 p-2 rounded-lg">
+            <input id="name" name="name" type="text" autocomplete="nickname" maxlength="20" class="border border-gray-300 p-2 rounded-lg">
             <span id="nameValidationMessage" class="mt-2 text-xs text-red-700"></span>
         </div>        
         <div class="flex flex-col">
             <label for="email">Email</label>
-            <input id="email" name="email" type="text" class="border border-gray-300 p-2 rounded-lg">
+            <input id="email" name="email" type="email" autocomplete="new-username" class="border border-gray-300 p-2 rounded-lg">
             <span id="emailValidationMessage" class="mt-2 text-xs text-red-700"></span>
         </div>        
         <div class="flex flex-col">
             <label for="password">Password</label>
-            <input id="password" name="password" type="password" class="border border-gray-300 p-2 rounded-lg">
+            <input id="password" name="password" type="password" autocomplete="new-password" class="border border-gray-300 p-2 rounded-lg">
             <span id="passwordValidationMessage" class="mt-2 text-xs text-red-700"></span>
         </div>        
         <div class="flex flex-col">
             <label for="password">Confirm password</label>
-            <input id="confirmPassword" name="confirmPassword" type="password" class="border border-gray-300 p-2 rounded-lg">
+            <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" class="border border-gray-300 p-2 rounded-lg">
             <span id="passwordConfirmValidationMessage" class="mt-2 text-xs text-red-700"></span>
         </div>        
         <div class="flex flex-col">
             <label for="email">Avatar</label>
             <input id="avatar" name="avatar" type="url" class="border border-gray-300 p-2 rounded-lg">
         </div>
-        <button type="submit" class="bg-blue-500 text-white rounded-lg p-2 mt-4">Register</button>
+        <button type="submit" class="bg-deep-blue-500 hover:bg-deep-blue-400 text-white rounded-lg p-2 mt-4">Register</button>
         
     </form>
     </div>`;

@@ -18,13 +18,13 @@ function login() {
         <form class="flex flex-col gap-4 mt-6 md:w-2/3 lg:w-1/2 bg-gray-100 rounded-lg p-4">
           <div class="flex flex-col">
             <label for="email">Email</label>
-            <input id="email" name="email" type="email" class="border border-gray-300 p-2 rounded-lg">
+            <input id="email" name="email" type="email" autocomplete="username" class="border border-gray-300 p-2 rounded-lg">
           </div>
           <div class="flex flex-col">
             <label for="password">Password</label>
-            <input id="password" name="password" type="password" class="border border-gray-300 p-2 rounded-lg">
+            <input id="password" name="password" type="password" autocomplete="current-password" class="border border-gray-300 p-2 rounded-lg">
           </div>            
-          <button type="submit" class="bg-blue-500 text-white rounded-lg p-2">Login</button>
+          <button type="submit" class="bg-deep-blue-500 hover:bg-deep-blue-400 text-white rounded-lg p-2">Login</button>
         </form>
     </div>
     `;

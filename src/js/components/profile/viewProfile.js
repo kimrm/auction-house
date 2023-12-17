@@ -21,7 +21,7 @@ function viewProfile(name) {
         <h1 id="title" class=" mt-10 text-3xl uppercase font-bold">${name}</h1>
         <h2 id="subtitle" class="my-5 text-xs uppercase font-bold"></h2>        
     </div>
-    <div id="listingsForProfileContainer" class="my-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3"></div>    
+    <div id="listingsForProfileContainer" class="my-5 w-full grid gap-4 md:grid-cols-2 lg:grid-cols-3"></div>    
 </div>`;
   const component = createComponent(html);
 

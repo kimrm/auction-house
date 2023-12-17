@@ -36,7 +36,7 @@ function listingsForm() {
                 <div class="flex flex-col gap-2 justify-start mt-4">
                     <button id="addMoreImagesButton" class="w-48 border bg-[#353841] text-gray-100 uppercase text-sm font-bold p-1 rounded-lg">Add more Images</button>
                 </div>
-                <input type="submit" value="Submit" class="bg-[#1D3461] text-white uppercase font-bold tracking-wider text-sm rounded-lg p-2 mt-8">
+                <input type="submit" value="Submit" class="bg-deep-blue-500 hover:bg-deep-blue-400 text-white uppercase font-bold tracking-wider text-sm rounded-lg p-2 mt-8">
             </form>
         </div>
         <div class="my-10">
