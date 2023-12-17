@@ -17,13 +17,13 @@ function listings(searchQuery = "") {
   pageTabNavigationContainer.append(pageTabNavigation());
   const path = window.location.pathname;
   switch (path) {
-    case "listings":
+    case "/listings":
       pageContentContainer.append(listingIndex(searchQuery));
       break;
-    case "listings/my-listings":
+    case "/listings/my-listings":
       pageContentContainer.append(listingsForm());
       break;
-    case "listings/my-bids":
+    case "/listings/my-bids":
       myBids().then((component) => {
         pageContentContainer.append(component);
       });
@@ -32,6 +32,8 @@ function listings(searchQuery = "") {
       pageContentContainer.append(listingIndex(searchQuery));
       break;
   }
+
+  console.log("path", path);
 
   document.addEventListener("pageTabNavigation_pageChanged", (event) => {
     pageContentContainer.innerHTML = "";
@@ -50,6 +52,10 @@ function listings(searchQuery = "") {
       default:
         break;
     }
+  });
+
+  document.addEventListener("popstate", () => {
+    console.log("popstate in listings");
   });
 
   return component;

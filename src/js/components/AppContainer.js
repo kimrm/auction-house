@@ -169,6 +169,7 @@ class AppContainer {
   handlePopStateEvent() {
     const path = window.location.pathname.replace("/", "");
     this.handleRoutes(path);
+    console.log("popstate in app");
   }
 
   handleRouteChangedEvent(event) {

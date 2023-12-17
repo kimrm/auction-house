@@ -32,6 +32,17 @@ function pageTabNavigation() {
     },
   });
 
+  window.addEventListener("pageTabNavigation_pageChanged", () => {
+    const path = window.location.pathname;
+    if (path === "/listings/my-listings") {
+      setActiveButton(auctionButton, component);
+    } else if (path === "/listings/my-bids") {
+      setActiveButton(myBidsButton, component);
+    } else {
+      setActiveButton(listingsButton, component);
+    }
+  });
+
   listingsButton.addEventListener("click", (event) => {
     window.history.pushState({}, null, "/listings");
     pageChangedEvent.detail.page = "listings";
@@ -52,6 +63,17 @@ function pageTabNavigation() {
     setActiveButton(event.target, component);
     document.dispatchEvent(pageChangedEvent);
   });
+
+  const initialPath = window.location.pathname;
+  if (initialPath === "/listings/my-listings") {
+    setActiveButton(auctionButton, component);
+  } else if (initialPath === "/listings/my-bids") {
+    setActiveButton(myBidsButton, component);
+  } else {
+    setActiveButton(listingsButton, component);
+  }
+
+  console.log(initialPath);
 
   return component;
 }

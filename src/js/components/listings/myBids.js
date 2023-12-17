@@ -10,8 +10,7 @@ async function myBids() {
   const html = `
 <div class="container">
     <div class="row">
-        <div class="col-12">
-            <h1>My Bids</h1>
+        <div class="col-12">            
             <div id="bidsForProfileContainer" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3"></div>
         </div>
     </div>

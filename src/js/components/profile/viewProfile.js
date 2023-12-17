@@ -5,13 +5,14 @@ import listingsItem from "../listings/listingsItem";
 import updateAvatar from "../../functions/api/updateAvatar";
 import getAuth from "../../functions/auth/getAuth";
 import storeAuth from "../../functions/auth/storeAuth";
+import { routeChangedEvent } from "../../customEvents";
 
 function viewProfile(name) {
   const html = `
 <div class="flex flex-col items-center">
     <div class="flex flex-col items-center justify-center w-full border-b-2">           
         <img id="avatar" class="mt-5 object-cover object-center h-24 w-24 rounded-full" src="">
-        <button id="editAvatarButton" class="mt-2 bg-slate-50 border border-slate-200 px-1 py-2 uppercase text-xs">
+        <button id="editAvatarButton" class="hidden mt-2 bg-slate-50 border border-slate-200 px-1 py-2 uppercase text-xs">
         Edit avatar
         </button>    
         <form id="editAvatarForm" class="hidden">
@@ -30,8 +31,21 @@ function viewProfile(name) {
   const avatarUrl = component.querySelector("#avatarUrl");
   const avatarImage = component.querySelector("#avatar");
 
-  if (getAuth().name !== name) {
-    editAvatarButton.classList.add("hidden");
+  const loggedInProfile = getAuth();
+
+  if (!loggedInProfile) {
+    const loginAlertComponent = createComponent(
+      `<div><p>You need to be logged in to view profiles. <a href="#" id="loginLink" class="text-blue-900">Log in</p></div>`,
+    );
+    const loginLink = loginAlertComponent.querySelector("#loginLink");
+    loginLink.addEventListener("click", () => {
+      document.dispatchEvent(routeChangedEvent("login"));
+    });
+    return loginAlertComponent;
+  }
+
+  if (loggedInProfile && loggedInProfile.name === name) {
+    editAvatarButton.classList.remove("hidden");
   }
 
   editAvatarButton.addEventListener("click", (event) => {

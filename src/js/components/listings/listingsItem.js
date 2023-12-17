@@ -68,8 +68,7 @@ function listingItem(listing, wins = []) {
       image.src = src;
       image.classList.remove("hidden");
     })
-    .catch((e) => {
-      console.error(e);
+    .catch(() => {
       container.removeChild(image);
       const noImage = document.createElement("div");
       noImage.classList.add(
