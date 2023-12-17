@@ -38,16 +38,13 @@ function footer() {
   });
 
   const myListingsCount = component.querySelector("#myListingsCount");
-  listingsForProfile(profileData.name, {}).then((listings) => {
-    myListingsCount.textContent = listings.length;
+  countMyListings(profileData.name).then((count) => {
+    myListingsCount.textContent = count;
   });
 
   const myBidsCount = component.querySelector("#myBidsCount");
-  bids(profileData.name, {}).then((bids) => {
-    const uniqueListingBids = Array.from(
-      new Map(bids.map((bid) => [bid.listing.id, bid])).values(),
-    );
-    myBidsCount.textContent = uniqueListingBids.length;
+  countMyBids(profileData.name).then((count) => {
+    myBidsCount.textContent = count;
   });
 
   const menuButton = component.querySelector("#footer_menuButton");
@@ -98,10 +95,10 @@ function footer() {
 
 function footerMenuPopUp() {
   const html = `
-<div id="footer_menu" class="absolute z-50 bottom-[3rem] left-0 md:left-auto right-0 bg-slate-300 border border-slate-300 rounded-lg">
+<div id="footer_menu" class="absolute z-50 bottom-[3rem] left-0 md:hidden right-0 bg-slate-300 border border-slate-300 rounded-lg">
   <ul class="flex flex-col gap-1">
-    <li><a id="popUpMyBidsLink" class="text-black block bg-slate-100 hover:bg-slate-200 px-12 py-4" href="/listings/my-bids">My bids: 3</a></li>
-    <li><a id="popUpMyListingsLink" class="text-black block bg-slate-100 hover:bg-slate-200 px-12 py-4" href="/listings/my-listings">My Listings: 3</a></li>
+  <li><a id="popUpMyListingsLink" class="text-black block bg-slate-100 hover:bg-slate-200 px-12 py-4" href="/listings/my-listings">My Listings: <span id="myListingsCount2"></span></a></li>
+    <li><a id="popUpMyBidsLink" class="text-black block bg-slate-100 hover:bg-slate-200 px-12 py-4" href="/listings/my-bids">My bids: <span id="myBidsCount2"></span></a></li>    
   </ul>
 </div>    
   `;
@@ -109,6 +106,16 @@ function footerMenuPopUp() {
 
   const myListingsLink = popUpMenu.querySelector("#popUpMyListingsLink");
   const myBidsLink = popUpMenu.querySelector("#popUpMyBidsLink");
+
+  const myListingsCount2 = popUpMenu.querySelector("#myListingsCount2");
+  countMyListings(getAuth().name).then((count) => {
+    myListingsCount2.textContent = count;
+  });
+
+  const myBidsCount2 = popUpMenu.querySelector("#myBidsCount2");
+  countMyBids(getAuth().name).then((count) => {
+    myBidsCount2.textContent = count;
+  });
 
   myListingsLink.addEventListener("click", (event) => {
     event.preventDefault();
@@ -137,6 +144,27 @@ function footerMenuPopUp() {
   });
 
   return popUpMenu;
+}
+
+async function countMyListings(profileName) {
+  try {
+    const listings = await listingsForProfile(profileName, {});
+    return listings.length;
+  } catch {
+    return 0;
+  }
+}
+
+async function countMyBids(profileName) {
+  try {
+    const bidsData = await bids(profileName, {});
+    const uniqueListingBids = Array.from(
+      new Map(bidsData.map((bid) => [bid.listing.id, bid])).values(),
+    );
+    return uniqueListingBids.length;
+  } catch {
+    return 0;
+  }
 }
 
 export default footer;
