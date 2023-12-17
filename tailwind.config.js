@@ -6,6 +6,7 @@ export default {
       transparent: "transparent",
       current: "currentColor",
       white: "#FFFFFF",
+      black: "#000000",
       "deep-blue": {
         50: "#F2F6FF",
         400: "#27457F",
@@ -76,6 +77,19 @@ export default {
         800: "#991b1b",
         900: "#7f1d1d",
         950: "#3b0d0d",
+      },
+      green: {
+        50: "#ecfdf5",
+        100: "#d1fae5",
+        200: "#a7f3d0",
+        300: "#6ee7b7",
+        400: "#34d399",
+        500: "#10b981",
+        600: "#059669",
+        700: "#047857",
+        800: "#065f46",
+        900: "#064e3b",
+        950: "#022d24",
       },
     },
     fontFamily: {
