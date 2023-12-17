@@ -12,6 +12,7 @@ A live demo of the project:
 - HTML
 - Tailwind CSS
 - Javascript
+- Vite
 
 ## Dependencies
 
@@ -34,11 +35,11 @@ git clone git@github.com:kimrm/auction-house.git
 
 ## Contributing
 
-As this is a student project contributions are not requested.
+As this is a student project contributions is not requested.
 
 ## Contact
 
-[My LinkedIn page](https://www.linkedin.com/in/kim-rune-moller/)
+[My website](https://portfolio.kimrune.dev)
 
 ## License
 
