@@ -7,11 +7,11 @@ function listingsIndex(searchQuery = "") {
 <div class="mb-4 flex gap-2 items-center"> 
   <div>
     <input class="hidden peer" type="radio" id="sortEnding" name="sortOrder" value="ending" checked>
-    <label for="sortEnding" class="text-xs uppercase font-bold tracking-wider ml-2 p-2 outline outline-white peer-checked:outline-blue-200 rounded cursor-pointer">Ending soon</label>    
+    <label for="sortEnding" class="text-xs uppercase font-bold tracking-wider ml-2 p-2 outline outline-white peer-checked:outline-blue-200 peer-checked:text-blue-900 hover:text-blue-900 rounded cursor-pointer">Ending soon</label>    
   </div>
   <div>
     <input class="hidden peer" type="radio" id="sortNew" name="sortOrder" value="newlyCreated">
-    <label for="sortNew" class="text-xs uppercase font-bold tracking-wider ml-2 p-2 outline outline-white peer-checked:outline-blue-200 rounded cursor-pointer">Newly listed</label>    
+    <label for="sortNew" class="text-xs uppercase font-bold tracking-wider ml-2 p-2 outline outline-white peer-checked:outline-blue-200 peer-checked:text-blue-900 hover:text-blue-900 rounded cursor-pointer">Newly listed</label>    
   </div>
 </div>
 <div id="listings" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
