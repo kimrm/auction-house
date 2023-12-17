@@ -6,6 +6,7 @@ export default {
       transparent: "transparent",
       current: "currentColor",
       white: "#FFFFFF",
+      black: "#000000",
       "deep-blue": {
         50: "#F2F6FF",
         400: "#27457F",
