@@ -1,5 +1,7 @@
 # Auction House
 
+![Screenshot](https://kimrm.github.io/auction-house/images/Skjermbilde%202024-06-09%20kl.%2015.45.17.png)
+
 ## Description
 
 This project is school project for a fictional auction site.
@@ -9,17 +11,17 @@ A live demo of the project:
 
 ## Built With
 
-- HTML
-- Tailwind CSS
-- Javascript
-- Vite
+### Stack
+
+- Vanilla Javascript
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Vite](https://vitejs.dev)
 
 ## Dependencies
 
-Node version 16.13.1 or higher.
-NPM version 8.1.2 or higher.
-
-This project uses the [day.js](https://day.js.org) package.
+- Node version 16.13.1 or higher.
+- NPM version 8.1.2 or higher.
+- [day.js](https://day.js.org)
 
 ## Getting Started
 
@@ -35,11 +37,11 @@ git clone git@github.com:kimrm/auction-house.git
 
 ## Contributing
 
-As this is a student project contributions is not requested.
+As this is a student, project contributions is not requested.
 
 ## Contact
 
-[My website](https://portfolio.kimrune.dev)
+[My website](https://kimrune.dev)
 
 ## License
 
